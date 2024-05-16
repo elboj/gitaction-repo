@@ -20,17 +20,17 @@ jobs:
       - name: Run a one-line script 
         run: echo Hello, world!
 
-      - name: Run a one-line script 
+      - name: Run a two-line script 
         run: echo Hello, Dayo!
 
-      - name: Run a one-line script 
+      - name: Run a three-line script 
         run: echo Hello, Tobi!
 
-      - name: Run a one-line script 
+      - name: Run a four-line script 
         run: echo Hello, Canada!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Run a five-line script
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
