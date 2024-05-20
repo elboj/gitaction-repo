@@ -24,6 +24,6 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
-            Get-ResourceGroup
+            Get-AzResourceGroup
 
     
