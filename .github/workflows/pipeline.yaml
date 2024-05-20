@@ -24,6 +24,7 @@ jobs:
         with:
           azPSVersion: "latest"
           inlineScript: |
+            Connect-AzAccount 
             Get-AzResourceGroup
 
     
