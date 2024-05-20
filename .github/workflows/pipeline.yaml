@@ -8,26 +8,29 @@ on:
 
 jobs:
   build:
+    env:
+      CLOUD: "Azure"
     runs-on: ubuntu-latest
     steps:
       # Runs a single command using the runners shell
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Login to Azure
+      - name: Login to {{ env.CLOUD }}
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true #Ensures you can use the cred in a ps session
       
-      - name: Azure PowerShell script
+      - name: Run {{ env.CLOUD }} PowerShell script
         uses: azure/powershell@v2
         with:
           azPSVersion: "latest"
           inlineScript: |
             Get-AzResourceGroup | Out-File ./resource_groups.txt
       
-      - uses: actions/upload-artifact@v4
+      - name: Upload {{ env.CLOUD }} resource groups
+        uses: actions/upload-artifact@v4
         with:
           name: my-artifact
           path: ./resource_groups.txt
