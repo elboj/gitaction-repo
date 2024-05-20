@@ -18,13 +18,13 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true 
       
       - name: Azure PowerShell script
         uses: azure/powershell@v2
         with:
           azPSVersion: "latest"
           inlineScript: |
-            Connect-AzAccount 
             Get-AzResourceGroup
 
     
