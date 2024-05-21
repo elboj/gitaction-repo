@@ -13,7 +13,7 @@ jobs:
       CLOUD: "Azure"
       ORG: "SuperHog"
     steps:
-      - name: Run Script
+      - name: "Run Script ${{env.CLOUD}}"
         run: echo ${{env.CLOUD}}
 
       # - name: Checkout Repository
