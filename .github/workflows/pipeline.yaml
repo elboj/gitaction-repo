@@ -16,26 +16,13 @@ jobs:
       - name: "Run Script ${{env.CLOUD}}"
         run: echo ${{env.CLOUD}}
 
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      # - name: Checkout Repository
+      #   uses: actions/checkout@v3
       
       - name: "Login ${{env.CLOUD}}"
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true #Ensures you can use the cred in a ps session
-      
-      # - name: Get ${{ env.CLOUD }} ${{ env.ORG }} Resource Groups
-      #   uses: azure/powershell@v2
-      #   with:
-      #     azPSVersion: "latest"
-      #     inlineScript: |
-      #       Get-AzResourceGroup | Out-File ./resource_groups.txt
-      
-      # - name: Upload ${{ env.CLOUD }} resource group
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: my-artifact
-      #     path: ./resource_groups.txt
-
+    
     
