@@ -19,11 +19,11 @@ jobs:
       # - name: Checkout Repository
       #   uses: actions/checkout@v3
       
-      - name: "Login to ${{env.CLOUD}}"
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true #Ensures you can use the cred in a ps session
+      # - name: Login to ${{ env.CLOUD }}
+      #   uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #     enable-AzPSSession: true #Ensures you can use the cred in a ps session
       
       # - name: Get ${{ env.CLOUD }} ${{ env.ORG }} Resource Groups
       #   uses: azure/powershell@v2
