@@ -1,16 +1,21 @@
 name: CI
 on:
-  push:
-    branches:
-    - main
+  # push:
+  #   branches:
+  #   - main
   workflow_dispatch:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ./terraform
+
     runs-on: ubuntu-latest
     env:
       CLOUD: "Azure"
       ORG: "SuperHog"
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -27,11 +32,40 @@ jobs:
           azPSVersion: "latest"
           inlineScript: |
             Get-AzResourceGroup | Out-File ./resource_groups.txt
+
+      #ADD STEP TO DO SOME TOKEN REPLACEMENT HERE -- VM PASSWORD
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
       
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-artifact
-          path: ./resource_groups.txt
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+      
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+
+      - name: Terraform Apply
+        id: apply
+        run : terraform apply -auto-approve
+      
+      
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: my-artifact
+      #     path: ./resource_groups.txt
+            
+    
 
     
