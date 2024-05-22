@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLOUD: "Azure"
-      ORG: "SuperHog"
+      VM_PASSWORD: ${{ secrets.VM_PASSWORD}}
 
     steps:
       - name: Checkout Repository
@@ -32,8 +32,14 @@ jobs:
           azPSVersion: "latest"
           inlineScript: |
             Get-AzResourceGroup | Out-File ./resource_groups.txt
-
-      #ADD STEP TO DO SOME TOKEN REPLACEMENT HERE -- VM PASSWORD
+      
+      - name: Token Replacement
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+      
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
