@@ -95,3 +95,19 @@ resource "azurerm_network_interface_security_group_association" "nsg_association
   network_interface_id      = azurerm_network_interface.network_interface.id
   network_security_group_id = azurerm_network_security_group.network_security_group.id
 }
+
+module "azurerm_linux_virtual_machine" {
+  source = "github.com/hashicorp/example"
+  virtual_network_name = "rg-uks-gen-dev001"
+  resource_group_name = "UK South"
+  location = "vnt-uks-gen-dev001"
+  subnet_name = "default"
+  vm_public_ip = "nic-uks-vm-dev001"
+  nic_name = "ip_config"
+  ip_config = "pip-uks-gen-dev001"
+  vm_name = "vm-uks-gen-dev001"
+  vm_size = "Standard_DS1_v2"
+  admin_username = "elboj_admin"
+  admin_password = ""
+
+}
