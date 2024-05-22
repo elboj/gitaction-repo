@@ -5,6 +5,9 @@ on:
     - main
   workflow_dispatch:
 
+env:
+  ORG: "Genesis"
+
 jobs:
   build:
     defaults:
@@ -22,67 +25,82 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     
-    #WORKING WITH ACTIONS AND EXPLORING COMMONLY USED ACTIONS
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Using variables
+        run: echo "The name of my cloud is ${{ env.CLOUD }}"
+    
+
+
+
+
+
+
+
+
+
+
+    #WORKING WITH ACTIONS AND EXPLORING COMMONLY USED ACTIONS
+    # steps:
+    #   - name: Checkout Repository
+    #     uses: actions/checkout@v3
       
-      - name: "Login Azure"
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true #Ensures you can use the cred in a ps session
+    #   - name: "Login Azure"
+    #     uses: azure/login@v2
+    #     with:
+    #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+    #       enable-AzPSSession: true #Ensures you can use the cred in a ps session
       
-      - name: Run PowerShell Script
-        uses: azure/powershell@v2
-        with:
-          azPSVersion: "latest"
-          inlineScript: |
-            Get-AzResourceGroup | Out-File ./resource_groups.txt
+    #   - name: Run PowerShell Script
+    #     uses: azure/powershell@v2
+    #     with:
+    #       azPSVersion: "latest"
+    #       inlineScript: |
+    #         Get-AzResourceGroup | Out-File ./resource_groups.txt
       
-      - name: Token Replacement
-        uses: cschleiden/replace-tokens@v1
-        with:
-          tokenPrefix: '__'
-          tokenSuffix: '__'
-          files: '["**/*.tf"]'
+    #   - name: Token Replacement
+    #     uses: cschleiden/replace-tokens@v1
+    #     with:
+    #       tokenPrefix: '__'
+    #       tokenSuffix: '__'
+    #       files: '["**/*.tf"]'
       
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-      
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt
-        #Changing step default error behavior
-        continue-on-error: true
-      
-      - name: Terraform Init
-        id: init
-        run: terraform init
-      
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-      
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+    #   - name: Setup Terraform
+    #     uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Apply
-        id: apply
-        run : terraform apply -auto-approve
+    #   - name: Terraform Init
+    #     id: init
+    #     run: terraform init
+      
+    #   - name: Terraform fmt
+    #     id: fmt
+    #     run: terraform fmt
+    #     #Changing step default error behavior
+    #     continue-on-error: true
       
       
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: my-artifact
-      #     path: ./resource_groups.txt
+    #   - name: Terraform Validate
+    #     id: validate
+    #     run: terraform validate -no-color
+      
+    #   - name: Terraform Plan
+    #     id: plan
+    #     run: terraform plan -no-color
 
-      #OTHER THINGS TO COVER
-      #1. Expressions
-      #2. Setting up infra cost
+    #   - name: Terraform Apply
+    #     id: apply
+    #     run : terraform apply -auto-approve
+      
+      
+    #   # - name: Upload Artifact
+    #   #   uses: actions/upload-artifact@v4
+    #   #   with:
+    #   #     name: my-artifact
+    #   #     path: ./resource_groups.txt
+
+    #   #OTHER THINGS TO COVER
+    #   #1. Expressions
+    #   #2. Setting up infra cost
             
 
     

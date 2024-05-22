@@ -1,8 +1,8 @@
 module "azurerm_linux_virtual_machine" {
   # source = "../modules/linux-virtual-machine"
   source = "git::https://github.com/elboj/Terraform-Modules.git//modules/linux-virtual-machine" 
-  virtual_network_name = "vnt-uks-gen-devy001"
-  resource_group_name = "rg-uks-gen-defv001"
+  virtual_network_name = "vnt-uks-gen-dev001"
+  resource_group_name = "rg-uks-gen-dev001"
   location = "UK South"
   subnet_name = "default"
   vm_public_ip = "nic-uks-vm-dev001"
