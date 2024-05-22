@@ -39,7 +39,7 @@ jobs:
         uses: azure/powershell@v2
         with:
           inlineScript: |
-            Get-AzResourceGroup"
+            Get-AzResourceGroup
           azPSVersion: "latest"
 
       # - name: Workflow Variable
