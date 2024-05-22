@@ -34,6 +34,9 @@ jobs:
 
       - name: Repository Variable
         run: echo "retrieve password:${{ vars.REPO_VARIABLE }}"
+      
+      - name: Open terraform folder
+        run: ls ./terraform
     
 
 
