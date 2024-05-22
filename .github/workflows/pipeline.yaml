@@ -26,6 +26,9 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
       - name: Workflow Variable
         run: echo "The name of my cloud is ${{ env.CLOUD }}"
 
