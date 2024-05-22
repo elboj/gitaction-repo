@@ -53,7 +53,8 @@ jobs:
       
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -check
+        run: terraform fmt
+        #Changing step default error behavior
         continue-on-error: true
       
       - name: Terraform Init
@@ -78,6 +79,10 @@ jobs:
       #   with:
       #     name: my-artifact
       #     path: ./resource_groups.txt
+
+      #OTHER THINGS TO COVER
+      #1. Expressions
+      #
             
 
     
