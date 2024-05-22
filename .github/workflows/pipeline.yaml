@@ -26,11 +26,14 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     
     steps:
-      - name: Using variables
+      - name: Workflow Variable
         run: echo "The name of my cloud is ${{ env.CLOUD }}"
 
-      - name: Sensitive Data
+      - name: Repository Secret
         run: echo "retrieve password:${{ secrets.SENSITIVE_DATA }}"
+
+      - name: Repository Variable
+        run: echo "retrieve password:${{ vars.REPO_VARIABLE }}"
     
 
 
