@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: Using variables
         run: echo "The name of my cloud is ${{ env.CLOUD }}"
+
+      - name: Sensitive Data
+        run: echo "retrieve password:${{ secrets.SENSITIVE_DATA }}"
     
 
 
