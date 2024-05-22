@@ -11,5 +11,5 @@ module "azurerm_linux_virtual_machine" {
   vm_name = "vm-uks-gen-dev001"
   vm_size = "Standard_DS1_v2"
   admin_username = "elboj_admin"
-  admin_password = ""
+  admin_password = "__VM_PASSWORD__"
 }
