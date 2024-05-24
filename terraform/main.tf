@@ -1,5 +1,6 @@
 module "azurerm_linux_virtual_machine" {
   source = "git::https://github.com/elboj/Terraform-Modules.git//modules/linux-virtual-machine" 
+  module_version = "0.1.0"
   virtual_network_name = "vnt-uks-gen-dev001"
   resource_group_name = "rg-uks-gen-dev001"
   location = "UK South"
