@@ -42,6 +42,53 @@ jobs:
             Get-AzResourceGroup
           azPSVersion: "latest"
 
+
+      - name: Token Replacement
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+      
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt
+        #Changing step default error behavior
+        continue-on-error: true
+      
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+
+      - name: Terraform Apply
+        id: apply
+        run : terraform apply -auto-approve
+
+
+
+
+
+
+
+
+
+
+        
+    
+
       # - name: Workflow Variable
       #   run: echo "The name of my cloud is ${{ env.CLOUD }}"
 
@@ -83,39 +130,6 @@ jobs:
     #       inlineScript: |
     #         Get-AzResourceGroup | Out-File ./resource_groups.txt
       
-    #   - name: Token Replacement
-    #     uses: cschleiden/replace-tokens@v1
-    #     with:
-    #       tokenPrefix: '__'
-    #       tokenSuffix: '__'
-    #       files: '["**/*.tf"]'
-      
-
-    #   - name: Setup Terraform
-    #     uses: hashicorp/setup-terraform@v3
-
-    #   - name: Terraform Init
-    #     id: init
-    #     run: terraform init
-      
-    #   - name: Terraform fmt
-    #     id: fmt
-    #     run: terraform fmt
-    #     #Changing step default error behavior
-    #     continue-on-error: true
-      
-      
-    #   - name: Terraform Validate
-    #     id: validate
-    #     run: terraform validate -no-color
-      
-    #   - name: Terraform Plan
-    #     id: plan
-    #     run: terraform plan -no-color
-
-    #   - name: Terraform Apply
-    #     id: apply
-    #     run : terraform apply -auto-approve
       
       
     #   # - name: Upload Artifact
