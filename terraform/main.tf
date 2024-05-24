@@ -1,5 +1,4 @@
 module "azurerm_linux_virtual_machine" {
-  # source = "../modules/linux-virtual-machine"
   source = "git::https://github.com/elboj/Terraform-Modules.git//modules/linux-virtual-machine" 
   virtual_network_name = "vnt-uks-gen-dev001"
   resource_group_name = "rg-uks-gen-dev001"
