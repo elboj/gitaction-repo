@@ -8,8 +8,12 @@ module "azurerm_linux_virtual_machine" {
   vm_public_ip = "nic-uks-vm-dev001"
   nic_name = "ip_config"
   ip_config = "pip-uks-gen-dev001"
+  domain_name_label = "vm-uks-gen-dev001"
   vm_name = "vm-uks-gen-dev001"
   vm_size = "Standard_DS1_v2"
   admin_username = "elboj_admin"
   admin_password = "__VM_PASSWORD__"
+  storage_account_type = "Standard_LRS"
+  disk_size_gb         = "256"
+  managed_disk_name = "data-uks-gen-dev001"
 }
