@@ -9,76 +9,76 @@ env:
   ORG: "Genesis"
 
 jobs:
-  build:
-    defaults:
-      run:
-        working-directory: ./terraform
+  # build:
+  #   defaults:
+  #     run:
+  #       working-directory: ./terraform
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    #UNDERSTANDING VARIABLES, REPO VARIABLES AND REPO SECRETS
-    env:
-      CLOUD: "Azure"
-      VM_PASSWORD: ${{ secrets.VM_PASSWORD}}
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  #   #UNDERSTANDING VARIABLES, REPO VARIABLES AND REPO SECRETS
+  #   env:
+  #     CLOUD: "Azure"
+  #     VM_PASSWORD: ${{ secrets.VM_PASSWORD}}
+  #     ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  #     ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #     ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
-            enable-AzPSSession: true 
+  #     - name: Login to Azure
+  #       uses: azure/login@v2
+  #       with:
+  #           creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #           enable-AzPSSession: true 
 
-      - name: Run Azure PowerShell inline script
-        uses: azure/powershell@v2
-        with:
-          inlineScript: |
-            Get-AzResourceGroup
-          azPSVersion: "latest"
+  #     - name: Run Azure PowerShell inline script
+  #       uses: azure/powershell@v2
+  #       with:
+  #         inlineScript: |
+  #           Get-AzResourceGroup
+  #         azPSVersion: "latest"
 
 
-      - name: Token Replacement
-        uses: cschleiden/replace-tokens@v1
-        with:
-          tokenPrefix: '__'
-          tokenSuffix: '__'
-          files: '["**/*.tf"]'
+  #     - name: Token Replacement
+  #       uses: cschleiden/replace-tokens@v1
+  #       with:
+  #         tokenPrefix: '__'
+  #         tokenSuffix: '__'
+  #         files: '["**/*.tf"]'
       
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
+  #     - name: Terraform Init
+  #       id: init
+  #       run: terraform init
       
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt
-        #Changing step default error behavior
-        continue-on-error: true
+  #     - name: Terraform fmt
+  #       id: fmt
+  #       run: terraform fmt
+  #       #Changing step default error behavior
+  #       continue-on-error: true
       
       
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
+  #     - name: Terraform Validate
+  #       id: validate
+  #       run: terraform validate -no-color
       
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+  #     - name: Terraform Plan
+  #       id: plan
+  #       run: terraform plan -no-color
 
-      - name: Terraform Apply
-        id: apply
-        run : terraform apply -auto-approve
+  #     - name: Terraform Apply
+  #       id: apply
+  #       run : terraform apply -auto-approve
 
   run-playbooks:
-    needs: [build]
+    # needs: [build]
     defaults:
       run:
         working-directory: ./ansible

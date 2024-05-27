@@ -17,9 +17,8 @@
       msg: "{{ script_output.stdout }}"
 
   - name: Display mounted disk
-    ansible.builtin.command:
-        cmd: lsblk
-      register: lsblk_output
+    command: lsblk
+    register: lsblk_output
 
   - name: Display lsblk output
     ansible.builtin.debug:
