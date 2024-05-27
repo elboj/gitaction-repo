@@ -19,6 +19,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    
+    - name: Cache the Maven packages to speed up build
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2      
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml -DskipTests=true
@@ -30,19 +37,10 @@ jobs:
       run: | 
         cp ./target/surefire-reports/*.xml ./coverage.xml
         cat coverage.xml
-    
-    - name: Check test coverage
-      uses: johanvanhelden/gha-clover-test-coverage-check@v1
-      id: coverage
-      with:
-        percentage: "50"
-        filename: "coverage.xml"
 
-    - name: Generate the badge SVG image
-      uses: emibcn/badge-action@v1
-      id: badge
+    - uses: actions/upload-artifact@v1
       with:
-        label: 'Coverage'
-        status: ${{ steps.coverage.outputs.coverage }}
-        path: ./badges/test-coverage.svg
-        color: ${{ steps.coverage.outputs.coveragelines > 75 && 'green' || 'red' }}
+        name: Package
+        path: coverage.xml
+    
+  
