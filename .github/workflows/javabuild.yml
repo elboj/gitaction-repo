@@ -23,5 +23,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml -DskipTests=true
 
-    - name: Testing Target Path
-      run: ls -lh
+    - name: Testing with Maven
+      run: mvn test
