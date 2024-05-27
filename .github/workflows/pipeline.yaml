@@ -78,6 +78,7 @@ jobs:
         run : terraform apply -auto-approve
 
   run-playbooks:
+    needs: [build]
     defaults:
       run:
         working-directory: ./ansible
@@ -88,7 +89,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install SSH
+      - name: Install SSH PASS
         run: |
           sudo apt update
           sudo apt install sshpass -y
