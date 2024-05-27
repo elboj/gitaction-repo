@@ -10,7 +10,7 @@ module "azurerm_linux_virtual_machine" {
   ip_config = "ip-uks-vm-dev001" 
   domain_name_label = "vm-uks-gen-dev001"
   vm_name = "vm-uks-gen-dev001"
-  vm_size = "Standard_DS1_v2"
+  vm_size = "Standard_D4s_v3"
   admin_username = "elboj_admin"
   admin_password = "__VM_PASSWORD__"
   storage_account_type = "Standard_LRS"

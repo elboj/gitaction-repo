@@ -1,0 +1,17 @@
+- name: Run remote.sh script on all nodes
+  hosts: all
+  become: yes
+  tasks:
+  - name: Execute disk mount
+    script: ../scripts/mount_disk.sh
+
+  - name: Copy vm install script
+    copy: src=../scripts/install-script.sh dest=/tmp mode=0777
+
+  - name: Execute the script
+    command: sh /tmp/install-script.sh
+    register: script_output
+
+  - name: Display script output
+    ansible.builtin.debug:
+      msg: "{{ script_output.stdout }}"

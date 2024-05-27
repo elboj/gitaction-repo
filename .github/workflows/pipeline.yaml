@@ -77,6 +77,27 @@ jobs:
         id: apply
         run : terraform apply -auto-approve
 
+  run-playbooks:
+    defaults:
+      run:
+        working-directory: ./ansible
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH
+        run: |
+          sudo apt update
+          sudo apt install sshpass -y
+          sshpass -V
+
+      - name: Run ansible script
+        run: |
+          service ssh status
+          ansible-playbook -vvv -i inventory playbook.yaml
 
 
 
@@ -89,58 +110,8 @@ jobs:
 
     
 
-      # - name: Workflow Variable
-      #   run: echo "The name of my cloud is ${{ env.CLOUD }}"
+  
 
-      # - name: Repository Secret
-      #   run: echo "retrieve password:${{ secrets.SENSITIVE_DATA }}"
-
-      # - name: Repository Variable
-      #   run: echo "retrieve password:${{ vars.REPO_VARIABLE }}"
-      
-      # - name: Open terraform folder
-      #   run: ls ./terraform
-      
-    
-
-
-
-
-
-
-
-
-
-
-    #WORKING WITH ACTIONS AND EXPLORING COMMONLY USED ACTIONS
-    # steps:
-    #   - name: Checkout Repository
-    #     uses: actions/checkout@v3
-      
-    #   - name: "Login Azure"
-    #     uses: azure/login@v2
-    #     with:
-    #       creds: ${{ secrets.AZURE_CREDENTIALS }}
-    #       enable-AzPSSession: true #Ensures you can use the cred in a ps session
-      
-    #   - name: Run PowerShell Script
-    #     uses: azure/powershell@v2
-    #     with:
-    #       azPSVersion: "latest"
-    #       inlineScript: |
-    #         Get-AzResourceGroup | Out-File ./resource_groups.txt
-      
-      
-      
-    #   # - name: Upload Artifact
-    #   #   uses: actions/upload-artifact@v4
-    #   #   with:
-    #   #     name: my-artifact
-    #   #     path: ./resource_groups.txt
-
-    #   #OTHER THINGS TO COVER
-    #   #1. Expressions
-    #   #2. Setting up infra cost
             
 
     
