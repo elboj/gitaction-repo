@@ -1,1 +1,1 @@
-remote_node ansible_host=vm-uks-gen-dev001.uksouth.cloudapp.azure.com ansible_user=elboj_admin ansible_ssh_pass="Elboj_Password_1$_"
+remote_node ansible_host=vm-uks-gen-dev001.uksouth.cloudapp.azure.com ansible_user=elboj_admin ansible_ssh_pass="Elboj_Password_1$_" ansible_ssh_common_args='-o StrictHostKeyChecking=no'
