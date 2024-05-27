@@ -4,7 +4,7 @@ module "azurerm_linux_virtual_machine" {
   virtual_network_name = "vnt-uks-gen-dev001"
   resource_group_name = "rg-uks-gen-dev001"
   location = "UK South"
-  subnet_name = "default"
+  subnet_name = "web-uks-gen-dev001"
   vm_public_ip = "pip-uks-gen-dev001"
   nic_name = "nic-uks-vm-dev001"
   ip_config = "ip-uks-vm-dev001" 
