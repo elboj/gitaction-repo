@@ -25,3 +25,6 @@ jobs:
 
     - name: Testing with Maven
       run: mvn test
+
+    - name: Display test result
+      run: la -lRh
