@@ -1,22 +1,17 @@
-// pipeline {
-//   agent any
-
-//   stages {
-//       stage('Build Artifact') {
-//             steps {
-//               sh "mvn clean package -DskipTests=true"
-//               archive 'target/*.jar' //so that they can be downloaded later
-//             }
-//         }   
-//     }
-// }
 pipeline {
   agent any
 
   stages {
-      stage('Hello World') {
+      stage('Build Artifact') {
             steps {
-              echo "hello world"
+              sh "mvn clean package -DskipTests=true"
+              archive 'target/*.jar'
+            }
+        } 
+
+      stage('Unit Testing') {
+            steps {
+              sh "mvn test"
             }
         }   
     }
