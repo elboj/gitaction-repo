@@ -15,3 +15,12 @@
   - name: Display script output
     ansible.builtin.debug:
       msg: "{{ script_output.stdout }}"
+
+  - name: Display mounted disk
+    ansible.builtin.command:
+        cmd: lsblk
+      register: lsblk_output
+
+  - name: Display lsblk output
+    ansible.builtin.debug:
+      msg: "{{ lsblk_output.stdout }}"
