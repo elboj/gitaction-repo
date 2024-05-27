@@ -27,4 +27,4 @@ jobs:
       run: mvn test
 
     - name: Display test result
-      run: la -lRh
+      run: ls -lRh
