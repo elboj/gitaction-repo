@@ -38,9 +38,29 @@ jobs:
         cp ./target/surefire-reports/*.xml ./coverage.xml
         cat coverage.xml
 
-    - uses: actions/upload-artifact@v1
+    - name: Log into registry
+      uses: docker/login-action@v1
       with:
-        name: Package
-        path: coverage.xml
+        registry: ${{ secrets.ACR_ENDPOINT }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build & Push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ github.sha }}
+
+    # - name: Docker Run
+    #   run: |
+    #      docker images
+    #      docker run --name numeric-counter -d \
+    #      -p 8081:8081
+    #      ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ github.sha }}
+
+    # - uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Package
+    #     path: coverage.xml
     
   
