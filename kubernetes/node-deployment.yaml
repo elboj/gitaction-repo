@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: node-counter
+  name: node-counter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-counter
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: node-counter
+    spec:
+      containers:
+      - image: siddharth67/node-service:v1
+        name: node-app
+        resources: {}
+status: {}
+

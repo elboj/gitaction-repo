@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "numeric-counter.fullname" . }}-test-connection"
+  labels:
+    {{- include "numeric-counter.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "numeric-counter.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

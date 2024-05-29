@@ -20,6 +20,7 @@ jobs:
     env:
       CLOUD: "Azure"
       VM_PASSWORD: ${{ secrets.VM_PASSWORD}}
+      VM_ADMIN: ${{ vars.VM_ADMIN  }}
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -78,7 +79,7 @@ jobs:
         run : terraform apply -auto-approve
 
   run-playbooks:
-    needs: [build]
+    # needs: [build]
     defaults:
       run:
         working-directory: ./ansible
@@ -99,7 +100,6 @@ jobs:
         run: |
           service ssh status
           ansible-playbook -vvv -i inventory playbook.yaml
-
 
 
 

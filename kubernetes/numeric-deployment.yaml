@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: numeric-counter
+  name: numeric-counter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: numeric-counter
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: numeric-counter
+    spec:
+      containers:
+      - image: __IMAGE__
+        name: numeric-app
+        resources: {}
+status: {}
