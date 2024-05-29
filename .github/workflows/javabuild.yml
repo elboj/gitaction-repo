@@ -36,6 +36,10 @@ jobs:
     - name: Display test result
       run: | 
         ls -al ./target/
+    
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
 
     - name: Log into registry
       uses: docker/login-action@v1
@@ -48,14 +52,14 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ github.sha }}
+        tags: ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ steps.tag.outputs.tag }}
 
     # - name: Docker Run
     #   run: |
     #      docker images
     #      docker run --name numeric-counter -d \
     #      -p 8081:8081
-    #      ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ github.sha }}
+    #      ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }}
 
     # - uses: actions/upload-artifact@v1
     #   with:
