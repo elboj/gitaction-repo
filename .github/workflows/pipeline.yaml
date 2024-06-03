@@ -44,62 +44,62 @@ jobs:
           azPSVersion: "latest"
 
 
-      - name: Token Replacement
-        uses: cschleiden/replace-tokens@v1
-        with:
-          tokenPrefix: '__'
-          tokenSuffix: '__'
-          files: '["**/*.tf"]'
+  #     - name: Token Replacement
+  #       uses: cschleiden/replace-tokens@v1
+  #       with:
+  #         tokenPrefix: '__'
+  #         tokenSuffix: '__'
+  #         files: '["**/*.tf"]'
       
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
+  #     - name: Terraform Init
+  #       id: init
+  #       run: terraform init
       
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt
-        #Changing step default error behavior
-        continue-on-error: true
+  #     - name: Terraform fmt
+  #       id: fmt
+  #       run: terraform fmt
+  #       #Changing step default error behavior
+  #       continue-on-error: true
       
       
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
+  #     - name: Terraform Validate
+  #       id: validate
+  #       run: terraform validate -no-color
       
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+  #     - name: Terraform Plan
+  #       id: plan
+  #       run: terraform plan -no-color
 
-      - name: Terraform Apply
-        id: apply
-        run : terraform apply -auto-approve
+  #     - name: Terraform Apply
+  #       id: apply
+  #       run : terraform apply -auto-approve
 
-  run-playbooks:
-    # needs: [build]
-    defaults:
-      run:
-        working-directory: ./ansible
+  # run-playbooks:
+  #   needs: [build]
+  #   defaults:
+  #     run:
+  #       working-directory: ./ansible
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
 
-      - name: Install SSH PASS
-        run: |
-          sudo apt update
-          sudo apt install sshpass -y
-          sshpass -V
+  #     - name: Install SSH PASS
+  #       run: |
+  #         sudo apt update
+  #         sudo apt install sshpass -y
+  #         sshpass -V
 
-      - name: Run ansible script
-        run: |
-          service ssh status
-          ansible-playbook -vvv -i inventory playbook.yaml
+  #     - name: Run ansible script
+  #       run: |
+  #         service ssh status
+  #         ansible-playbook -vvv -i inventory playbook.yaml
 
 
 
