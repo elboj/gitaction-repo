@@ -55,9 +55,8 @@ jobs:
       run: |
          docker images
          docker run --name numeric-counter -d \
-         -p 8080:8080
-         ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }}
-
+            -p 8080:8080 \
+            ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }} \
          curl 127.0.0.1:8080
 
 
