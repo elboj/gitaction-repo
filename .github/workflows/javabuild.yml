@@ -51,12 +51,15 @@ jobs:
         push: false #change to true later on
         tags: ${{ secrets.ACR_ENDPOINT }}/numeric_counter:${{ github.sha }}
 
-    ## - name: Docker Run
-    #   run: |
-    #      docker images
-    #      docker run --name numeric-counter -d \
-    #      -p 8081:8081
-    #      ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }}
+    - name: Docker Run
+      run: |
+         docker images
+         docker run --name numeric-counter -d \
+         -p 8080:8080
+         ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }}
+
+         curl 127.0.0.1:8080
+
 
     # - uses: actions/upload-artifact@v1
     #   with:
