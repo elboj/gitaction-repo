@@ -56,9 +56,8 @@ jobs:
 
     - name: Docker Run
       run: |
-         docker login acruksgendev001.azurecr.io --username ${{secrets.ARM_CLIENT_ID}} --password ${{secrets.ARM_CLIENT_SECRET}}
          docker images
-         docker run --name numeric-counter -d \
+         docker start --name numeric-counter -d \
             -p 8080:8080 \
             ${{ secrets.ACR_USERNAME }}/numeric_counter:${{ github.sha }} \
          curl 127.0.0.1:8080
