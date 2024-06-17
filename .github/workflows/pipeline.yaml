@@ -83,7 +83,7 @@ jobs:
         run: |
           infracost breakdown --path=. \
                         --format=table \
-                        
+
   deploy:
     needs: [build]
     environment: development
@@ -92,6 +92,10 @@ jobs:
         working-directory: ./terraform
     runs-on: ubuntu-latest
     steps:
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
       - name: Token Replacement
         uses: cschleiden/replace-tokens@v1
         with:
