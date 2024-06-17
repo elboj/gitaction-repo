@@ -74,32 +74,32 @@ jobs:
         id: plan
         run: terraform plan -no-color
 
-      - name: Terraform Apply
-        id: apply
-        run : terraform apply -auto-approve
+      # - name: Terraform Apply
+      #   id: apply
+      #   run : terraform apply -auto-approve
 
-  run-playbooks:
-    needs: [build]
-    defaults:
-      run:
-        working-directory: ./ansible
+  # run-playbooks:
+  #   needs: [build]
+  #   defaults:
+  #     run:
+  #       working-directory: ./ansible
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
 
-      - name: Install SSH PASS
-        run: |
-          sudo apt update
-          sudo apt install sshpass -y
-          sshpass -V
+  #     - name: Install SSH PASS
+  #       run: |
+  #         sudo apt update
+  #         sudo apt install sshpass -y
+  #         sshpass -V
 
-      - name: Run ansible script
-        run: |
-          service ssh status
-          ansible-playbook -vvv -i inventory playbook.yaml
+  #     - name: Run ansible script
+  #       run: |
+  #         service ssh status
+  #         ansible-playbook -vvv -i inventory playbook.yaml
 
 
 

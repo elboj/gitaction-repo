@@ -3,12 +3,13 @@ permissions:
   id-token: write
   contents: read
 on:
-  push:
-    branches: [ "main" ]
-    tags: ["v*.*.*"]
+  # push:
+  #   branches: [ "main" ]
+  #   tags: ["v*.*.*"]
 
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+    workflow_dispatch
 
 jobs:
   build:
