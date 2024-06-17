@@ -1,8 +1,8 @@
 name: CI
 on:
-  push:
-    branches:
-    - features/*
+  # push:
+  #   branches:
+  #   - main
   workflow_dispatch:
 
 env:
@@ -58,39 +58,33 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt
-        #Changing step default error behavior
-        continue-on-error: true
-      
-      
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-      
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
-      
-      - name: Setup Infracost
-        uses: infracost/actions/setup@v3
-        with:
-          api-key: ${{ secrets.INFRACOST_API_KEY }}
-      
-      - name: Generate Infracost Breakdown
-        run: |
-          infracost breakdown --path=. \
-                        --format=table \
 
-      # - name: Generate Infracost Breakdown
-      #   run: |
-      #     infracost breakdown --path=. \
-      #                   --format=json \
-      #                   --out-file=infracost-output.json
+      - name: Terraform Apply
+        id: apply
+        run : terraform apply -auto-approve
 
+  # run-playbooks:
+  #   needs: [build]
+  #   defaults:
+  #     run:
+  #       working-directory: ./ansible
 
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Install SSH PASS
+  #       run: |
+  #         sudo apt update
+  #         sudo apt install sshpass -y
+  #         sshpass -V
+
+  #     - name: Run ansible script
+  #       run: |
+  #         service ssh status
+  #         ansible-playbook -vvv -i inventory playbook.yaml
 
 
 
