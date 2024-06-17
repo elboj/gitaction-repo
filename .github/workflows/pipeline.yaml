@@ -83,6 +83,27 @@ jobs:
         run: |
           infracost breakdown --path=. \
                         --format=table \
+                        
+  deploy:
+    needs: [build]
+    environment: development
+    defaults:
+      run:
+        working-directory: ./terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Token Replacement
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+
+      - name: Deploy Terraform
+        id: deploy
+        run: terraform plan
+            
+
 
       # - name: Generate Infracost Breakdown
       #   run: |
