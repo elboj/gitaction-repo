@@ -59,7 +59,8 @@ jobs:
 
       - name: Build with Maven cloud
         run:  |
-          mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io 
+          ls -alh
+          mvn clean verify sonar:sonar --file pom.xml -Dsonar.host.url=https://sonarcloud.io 
             -Dsonar.organization=elboj \
             -Dsonar.projectKey=elboj_gitaction-repo
         env:
