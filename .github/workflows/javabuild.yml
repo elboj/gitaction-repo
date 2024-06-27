@@ -3,13 +3,10 @@ permissions:
   id-token: write
   contents: read
 on:
-  # push:
-  #   branches: [ "main" ]
-  #   tags: ["v*.*.*"]
-
-  # pull_request:
-  #   branches: [ "main" ]
-    workflow_dispatch
+  push:
+    branches: [ "main" ]
+    tags: ["v*.*.*"]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,6 +14,7 @@ jobs:
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     # environment: development 
     steps:
     - uses: actions/checkout@v4
@@ -41,30 +39,35 @@ jobs:
     - name: Testing with Maven
       run: mvn test
 
+    - name: Build with Maven cloud
+      run:  mvn -B verify sonar:sonar -Dsonar.projectKey=elboj_gitaction-repo -Dsonar.organization=elboj -Dsonar.host.url=https://sonarcloud.io
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN  }}
+        
     - name: Display test result
       run: | 
         ls -al ./target/
 
-  sonar-cloud:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      # - uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 0
-      # - name: SonarCloud Scan
-      #   uses: SonarSource/sonarcloud-github-action@v2.3.0
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # sonar-cloud:
+  #   runs-on: ubuntu-latest
+  #   needs: [build]
+  #   steps:
+  #     # - uses: actions/checkout@v4
+  #     #   with:
+  #     #     fetch-depth: 0
+  #     # - name: SonarCloud Scan
+  #     #   uses: SonarSource/sonarcloud-github-action@v2.3.0
+  #     #   env:
+  #     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Build with Maven cloud
-        run:  |
-          ls -alh
-          mvn clean verify sonar:sonar --file pom.xml -Dsonar.host.url=https://sonarcloud.io 
-            -Dsonar.organization=elboj \
-            -Dsonar.projectKey=elboj_gitaction-repo
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}        
+  #     - name: Build with Maven cloud
+  #       run:  |
+  #         ls -alh
+  #         mvn clean verify sonar:sonar --file pom.xml -Dsonar.host.url=https://sonarcloud.io 
+  #           -Dsonar.organization=elboj \
+  #           -Dsonar.projectKey=elboj_gitaction-repo
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}        
 
   # docker:
   #   runs-on: ubuntu-latest
