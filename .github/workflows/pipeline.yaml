@@ -1,8 +1,8 @@
 name: Terraform Plan and Infracost Pipeline
 on:
-  push:
-    branches:
-    - features/*
+  # push:
+  #   branches:
+  #   - features/*
   workflow_dispatch:
 
 env:
