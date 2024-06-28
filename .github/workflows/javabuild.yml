@@ -31,18 +31,30 @@ jobs:
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2      
+        restore-keys: ${{ runner.os }}-m2  
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml -DskipTests=true
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar    
 
-    - name: Testing with Maven
-      run: mvn test
+    # - name: Maven Build
+    #   run: mvn -B package --file pom.xml -DskipTests=true
 
-    - name: Build with Maven cloud
-      run:  mvn -B verify sonar:sonar -Dsonar.projectKey=elboj_gitaction-repo -Dsonar.organization=elboj -Dsonar.host.url=https://sonarcloud.io
+    # - name: JUnit Testing
+    #   run: mvn test
+
+    # -B verify would run the full maven lifecycle -- Build, Test, Package, Verify with SonarCloud. 
+    # if successful, we should be able to see a target directory after the pipeline runs
+    # Automatic Analysis has been turned off in the SonarCloud project. Running Auto and CI analysis would cause pipeline to fail
+    
+    - name: Analyze with SonarCloud
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=elboj_gitaction-repo
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN  }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Display test result
       run: | 
