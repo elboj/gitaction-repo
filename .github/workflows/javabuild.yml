@@ -62,11 +62,11 @@ jobs:
       run: | 
         ls -alr ./target/
     
-    - name: Upload Jacoco result
-      uses: actions/upload-artifact@v4
-      with:
-        name: jacoco-result
-        path: ./target/
+    # - name: Upload Jacoco result
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: jacoco-result
+    #     path: ./target/
     
 
   # sonar-cloud:
