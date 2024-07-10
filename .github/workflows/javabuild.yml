@@ -60,7 +60,14 @@ jobs:
         
     - name: Display test result
       run: | 
-        ls -al ./target/
+        ls -alr ./target/
+    
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4.1.8
+      with:
+        name: jacoco-result
+        path: ./target/
+    
 
   # sonar-cloud:
   #   runs-on: ubuntu-latest
