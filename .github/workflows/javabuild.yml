@@ -4,7 +4,7 @@ permissions:
   contents: read
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "fix/**" ]
     tags: ["v*.*.*"]
   workflow_dispatch:
 
@@ -18,9 +18,11 @@ jobs:
     # environment: development 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
     - name: Set up JDK 17
       uses: actions/setup-java@v3
-
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -49,7 +51,7 @@ jobs:
     # -B verify would run the full maven lifecycle -- Build, Test, Package, Verify with SonarCloud. 
     # if successful, we should be able to see a target directory after the pipeline runs
     # Automatic Analysis has been turned off in the SonarCloud project. Running Auto and CI analysis would cause pipeline to fail
-    
+
     - name: Analyze with SonarCloud
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=elboj_gitaction-repo
       env:
@@ -58,7 +60,14 @@ jobs:
         
     - name: Display test result
       run: | 
-        ls -al ./target/
+        ls -alr ./target/
+    
+    # - name: Upload Jacoco result
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: jacoco-result
+    #     path: ./target/
+    
 
   # sonar-cloud:
   #   runs-on: ubuntu-latest
