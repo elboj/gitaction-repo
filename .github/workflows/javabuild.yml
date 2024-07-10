@@ -62,8 +62,8 @@ jobs:
       run: | 
         ls -alr ./target/
     
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v4.1.8
+    - name: Upload Jacoco result
+      uses: actions/upload-artifact@v4
       with:
         name: jacoco-result
         path: ./target/
