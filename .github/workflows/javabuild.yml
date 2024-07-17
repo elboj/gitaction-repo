@@ -4,7 +4,7 @@ permissions:
   contents: read
 on:
   push:
-    branches: [ "main", "fix/**" ]
+    branches: [ "main", "fix/**", "features/**" ]
     tags: ["v*.*.*"]
   workflow_dispatch:
 
