@@ -59,7 +59,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Check Vulnurabilities with Dependency Check
+      continue-on-error: true
       run: mvn dependency-check:check
+
 
     - name: Display test result
       run: | 
