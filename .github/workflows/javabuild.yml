@@ -58,16 +58,18 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN  }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
+    - name: Check Vulnurabilities with Dependency Check
+      run: mvn dependency-check:check
+
     - name: Display test result
       run: | 
         ls -alr ./target/
-
     
-    # - name: Upload Jacoco result
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: jacoco-result
-    #     path: ./target/
+    - name: Generate Dependency Check Result
+      uses: actions/upload-artifact@v4
+      with:
+        name: depencency-check
+        path: ./target/
     
 
   # sonar-cloud:
